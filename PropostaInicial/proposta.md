@@ -4,8 +4,8 @@ Laboratório de Sistemas Microprocessados - Turma E
 
 Alunos: 
 
-- Eduardo Lemos Rocha - 17/0009157
-- Luísa Sinzker Fantin - xx/xxxxxxx
+- Eduardo Lemos Rocha	- 17/0009157
+- Luísa Sinzker Fantin	- 14/0151893
 
 ## Problema
 
