@@ -16,8 +16,5 @@ void main(void){
     configSensor();
     configBluetooth(_nonParity, _isOdd, _isMSB, _is1Stops, 0, _isnonSync);
 
-    while(1){
-
-
 }
 
