@@ -7,6 +7,6 @@
 #define OK 0
 
 void configSensor();
-int check_distance();
+int checkDistance();
 
 #endif //PROXIMITY_SENSOR_H

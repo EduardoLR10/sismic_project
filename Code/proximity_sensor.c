@@ -25,7 +25,7 @@ void configSensor(){
 
 }
 
-int check_distance(){
+int checkDistance(){
 
     unsigned int t1;
     unsigned int t2;
