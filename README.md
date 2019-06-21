@@ -28,12 +28,6 @@ Para mandar um comando para o triciclo é necessário tomar conhecimento de como
 ### Organização e Interpretação do Byte recebido
 | Bits | B7 | B6 | B5 | B4 | B3 | B2 | B1 | B0 |
 |------|----|----|----|----|----|----|----|----|
-| Função | Stop | Turn\
-Left | Turn\
-Right | Go\
-DLeft | Go\
-DRight | Go\
-Back | Go\
-Forward | Start |
+| Função | Stop | TurnLeft | TurnRight | GoDLeft | GoDRight | GoBack | GoForward | Start |
 
 Para qualquer ação, com exceção de ficar parado, o bit \textit{Start} precisa estar selecionado. Algumas combinações são auto-excludentes (como por exemplo, tentar andar para a diagonal direita e esquerda simultaneamente) e quando encontradas provocarão a parada total do móvel.
