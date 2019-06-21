@@ -30,4 +30,4 @@ Para mandar um comando para o triciclo é necessário tomar conhecimento de como
 |------|----|----|----|----|----|----|----|----|
 | Função | Stop | TurnLeft | TurnRight | GoDLeft | GoDRight | GoBack | GoForward | Start |
 
-Para qualquer ação, com exceção de ficar parado, o bit \textit{Start} precisa estar selecionado. Algumas combinações são auto-excludentes (como por exemplo, tentar andar para a diagonal direita e esquerda simultaneamente) e quando encontradas provocarão a parada total do móvel.
+Para qualquer ação, com exceção de ficar parado, o bit <strong><em>Start</em></strong> precisa estar selecionado. Algumas combinações são auto-excludentes (como por exemplo, tentar andar para a diagonal direita e esquerda simultaneamente) e quando encontradas provocarão a parada total do móvel.
