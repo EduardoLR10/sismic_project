@@ -16,12 +16,12 @@ void configSensor(){
     SetFlag(TA1CTL, TASSEL__SMCLK);
     SetFlag(TA1CTL, MC_2);
 
-    SetFlag(TA1CCTL1, CAP);
+    TA1CCTL1 = CAP;
     SetFlag(TA1CCTL1, CM__BOTH);
     SetFlag(TA1CCTL1, CCIS_0);
 
-    ClearPort(P1, SEL0, 2);
-    SetPort(P1, SEL1, 2);
+    ClearPort(P1, SEL1, 2);
+    SetPort(P1, SEL0, 2);
 
 }
 
@@ -52,7 +52,7 @@ int checkDistance(){
 
     t2 = TA1CCR1;
 
-    if((t2 - t1) <= 1160){
+    if((t2 - t1) <= 1740){
         return STOP;
     }else{
         return OK;

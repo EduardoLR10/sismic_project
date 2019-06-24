@@ -33,9 +33,9 @@ void configMotorsPINS(){
 
 void motor2_pwm(double dutyCycle, int Direction){
 
-    if(Direction == Backward){
+    if(Direction == Forward){
 
-        // Check if the motor was going FORWARD
+        // Check if the motor was going BACKWARD
         if(CompareFlagEQ(TB0CCTL3, OUTMOD_7, OUTMOD_7)){
 
             // Wait ending of last state
@@ -47,9 +47,9 @@ void motor2_pwm(double dutyCycle, int Direction){
 
         TB0CCR4 = dutyCycle * TB0CCR0 - 1;
     }
-    if(Direction == Forward){
+    if(Direction == Backward){
 
-        // Check if the motor was going BACKWARD
+        // Check if the motor was going FORWARD
         if(CompareFlagEQ(TB0CCTL4, OUTMOD_7, OUTMOD_7)){
             
             // Wait ending of last state

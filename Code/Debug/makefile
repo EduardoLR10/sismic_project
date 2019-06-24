@@ -8,6 +8,7 @@ GEN_OPTS__FLAG :=
 GEN_CMDS__FLAG := 
 
 ORDERED_OBJS += \
+"./bluetooth.obj" \
 "./configs.obj" \
 "./main.obj" \
 "./motors.obj" \
@@ -157,8 +158,8 @@ Car.hex: $(EXE_OUTPUTS)
 # Other Targets
 clean:
 	-$(RM) $(BIN_OUTPUTS__QUOTED)$(EXE_OUTPUTS__QUOTED)
-	-$(RM) "configs.obj" "main.obj" "motors.obj" "proximity_sensor.obj" 
-	-$(RM) "configs.d" "main.d" "motors.d" "proximity_sensor.d" 
+	-$(RM) "bluetooth.obj" "configs.obj" "main.obj" "motors.obj" "proximity_sensor.obj" 
+	-$(RM) "bluetooth.d" "configs.d" "main.d" "motors.d" "proximity_sensor.d" 
 	-@echo 'Finished clean'
 	-@echo ' '
 
