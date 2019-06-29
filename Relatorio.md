@@ -29,14 +29,20 @@ Alunos:
 - Eduardo Lemos Rocha	- 17/0009157
 - Luísa Sinzker Fantin	- 14/0151893
 
-## Problema
+## Proposta Inicial
 
 O problema que o projeto solucionará é servir de ferramenta para um entendimento mais aprofundado e famialirização com comunicação serial. Dessa forma, uma espécie de \textit{triciclo} em miniatura será construído e programado para ser controlado por meio das teclas \textit{setas} de um teclado ligado á uma máquina que possua conexão \textit{Bluetooth}. Além disso, o móvel deve ser capaz de limitar as ações do usuário com base na distância entre este e o obstáculo seguinte, prevenindo assim possíveis acidentes que possam danificar o projeto.
 
+## Problema/Objetivos
+
+O problema que o projeto solucionará é servir de ferramenta para um entendimento mais aprofundado e famialirização com comunicação serial. Dessa forma, uma espécie de \textit{triciclo} em miniatura será construído e programado para ser controlado por meio de um analógico \textit{joystick}. A comunicação entre o móvel e o controle será feito por meio de comunicação assícrona, utilizando o módulo \textit{Bluetooth}. Além disso, o móvel deve ser capaz de limitar as ações do usuário com base na distância entre este e o obstáculo seguinte, prevenindo assim possíveis acidentes que possam danificar o projeto.
+
 ## Sensores/Materiais Utilizados
 
-- Módulo Bluetooth Sereial HC-05 (Mestre/Escravo).
-- Módulo Driver Motor com dupla PonteH - L298N.
+- 02 Módulos Bluetooth Serial HC-05 (Mestre/Escravo).
+- Módulo LCD.
+- Módulo Joystick.
+- Módulo Driver Motor com dupla Ponte H - L298N.
 - Módulo Sensor de Proximidade HC-SR04.
 - 02 Motores de Micro-velocidade (3-6V DC) com Encoders.
 - Roda direcional.
@@ -44,7 +50,11 @@ O problema que o projeto solucionará é servir de ferramenta para um entendimen
 - Suporte para 4 pilhas AA.
 - Fonte Externa para o microprocessador.
 
-## Funcionamento do Programa
+## Funcionamento do Programa do Controle
+
+Escreva algo aqui!
+
+## Funcionamento do Programa do Triciclo
 
 O programa executa uma estrutura de \textit{loop} infinito. Primeiramente, verifica-se se a varíavel global que controla os motores está preenchida com um \textit{byte} que representa a ação de \textit{Stop}. Caso esteja, funções de parada dos motores são chamadas, o LED vermelho é aceso e o LED verde é apagado. Caso contrário, isto é, caso o byte da variável não seja um byte de \textit{Stop}, obrigatoriamente o byte deve conter o bit \textit{Start} como '1'. Todas as ações disponíveis, tirando a de \textit{Stop}, possuem o bit de \textit{Start} como '1'. Em seguida, após ser verificado com bit de \textit{Start}, uma função de análise do sensor de ultrassom é chamada. Essa função devolve a informação se o sensor está a 30 centímetros do próximo obstáculo. Caso esteja, os motores são parados, o LED vermelho é aceso, o LED verde é apagado e a única ação permitida para o usuário é mandar um byte para andar para trás. Caso a distância do sensor para o próximo obstáculo seja maior que 30 cm, o LED vermelho é apagado, o LED verde é aceso e será analisado qual direção que o móvel vai se locomover. Essa análise altera o \textit{dutyCycle} das PWMs dos motores, de acordo com a direção escolhida. As PWMs dos motores estão configuradas para 50 Hz.
 
@@ -107,7 +117,8 @@ O funcionamento do programa pode ser resumido por meio do fluxograma a seguir:
   \draw[->]             (verifyStop) -- node[anchor=north, xshift=0.35cm, yshift=0.4cm] {yes} (trocaLED1);
   \draw[->]             (trocaLED1) -- (stopMotors1);
   \draw[->]             (stopMotors1.north)--++(0,0) |-(verifyStop);
-  \draw[<->]             (verifyStop.south) -- node[anchor=south, yshift=0.1cm, xshift=-0.1cm] {no} (verifyStart.north);
+  \draw[->]             (verifyStop.west) --+(-1.5,0) |- node[anchor=east, yshift=0.2cm, xshift=-0.2cm] {no} (verifyStart.west);
+  \draw[->]             (verifyStart.north) -- node[anchor=east, yshift=0.2cm, xshift=-0.2cm] {no} (verifyStop.south);
   \draw[->]             (verifyStart.south) -- node[anchor=east] {yes} (trocaLED2.north);
   \draw[->]             (trocaLED2) -- (verifySensor.west);
   \draw[->]             (verifySensor.north) -- node[anchor=east, xshift=-0.1cm] {yes} (trocaLED3.south);
@@ -116,7 +127,7 @@ O funcionamento do programa pode ser resumido por meio do fluxograma a seguir:
   \draw[->]             (verifyBack) -- node[anchor=north] {no} (verifyStart);
   \draw[->]             (verifyBack) -- node[anchor=north] {yes} (goBack);
   \draw[->]             (goBack) -- (verifyStart.east);
-  \draw[->]             (verifySensor.south) --++(0,0) node[anchor=north, xshift=0.3cm] {no} |- (dLeft.east);
+  \draw[->]             (verifySensor.east) --++(0,0) node[anchor=north, xshift=0.3cm] {no} |- (dLeft.east);
   \draw[->]             (godLeft.west)--++(0,0) -|(verifyStart.south);
   \draw[->]				(dLeft.west) -- node[anchor=north, yshift=-0.1cm] {yes} (godLeft.east);
   \draw[->]             (dLeft) -- node[anchor=south, xshift=0.3cm, yshift=0.1cm] {no} (dRight);
@@ -134,11 +145,16 @@ O funcionamento do programa pode ser resumido por meio do fluxograma a seguir:
   \draw[->]             (up) -- node[anchor=south, xshift=0.3cm, yshift=0.1cm] {no} (down);
   \draw[->]				(down.west) -- node[anchor=north, yshift=-0.1cm] {yes} (goDown.east);
   \draw[->]             (goDown.west)--++(0,0) -|(verifyStart.south);
-  \draw[->]             (down.south)--++(0,0) node[anchor=north] {no} -|(verifyStart.south);
+  \draw[->]             (down.south)--++(0,-0.25) node[anchor=north, yshift=-0.1cm] {no} -|(verifyStart.south);
 
   \end{tikzpicture}
   \end{center}
 
+## Objetivos não completados
+
+Infelizmente, não foi possível utilizar o \textit{joystick} para controlar o triciclo. Os dois módulos estão funcionando normalmente quando conectados à um aparelho celular (\textit{smartphone}). O controle \textit{joystick} manda corretamente os bytes necessários para o aparelho celular. O triciclo recebe corretamente os bytes enviados pelo aparelho celular. O problema consistiu na comunicação dos dois módulos \textit{Bluetooth}. Não foi possível conectar um dos módulos \textit{Bluetooth} como mestre e o outro como escravo. Assim, fomos obrigados a comandar o triciclo por meio do aparelho celular.
+
+
 ## Energia
 
-A alimentação do sistema utiliza um conjunto de pilhas e uma \textit{powerbank}. As pilhas em série alimentam uma Ponte-H, que por sua vez alimenta o par de motores DC. A \textit{powerbank} alimenta a MSP430FR5994, que por sua vez alimenta o sensor ultrassom e o módulo \textit{bluetooth}. 
+A alimentação do sistema utiliza um conjunto de pilhas e uma \textit{powerbank}. As pilhas em série alimentam uma Ponte-H, que por sua vez alimenta o par de motores DC. A \textit{powerbank} alimenta a MSP430FR5994, que por sua vez alimenta o sensor ultrassom e o módulo \textit{bluetooth}.
