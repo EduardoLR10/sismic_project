@@ -24,7 +24,7 @@ header-includes: |
 
 Laboratório de Sistemas Microprocessados - Turma E
 
-Alunos: 
+Alunos:
 
 - Eduardo Lemos Rocha	- 17/0009157
 - Luísa Sinzker Fantin	- 14/0151893
@@ -52,7 +52,30 @@ O problema que o projeto solucionará é servir de ferramenta para um entendimen
 
 ## Funcionamento do Programa do Controle
 
-Escreva algo aqui!
+O controle foi impementado usando outra versão da placa, a MSP430F5529. As tensões dos pinos conectados ao Joystick, representando os eixos x e y foram medidas com referência positiva 3V3 e negativa GND (terra). As tensões menores que 1.2V indicam movimento para frente no eixo x e esquerda para o eixo y, tensões maiores que 1.8V indicam movimento para trás no eixo x e direita para o eixo y. Esses limiares de descrição foram usados pois em repouso o Joystick demarca pequenas variações de 1.6V. Duas variáveis de controle foram criadas para discretizar os limiares, uma para o eixo x, outra para o y:
+
+| direção x | direção y | medição | variavel |
+|-----------|-----------|---------|----------|
+|  	 Up	    |   Left    |	 <1.2V	|		 1		 |
+|   Down		|	  Right		|  >1.8V	|		 2		 |
+|	  Idle		|	  Idle		|1.2<M<1.8|		 0		 |
+
+Após a tradução desses valores a variável equivalente a x era multiplicada por 10 e então somada a variável equivalente a y, obtendo a seguinte tradução:
+
+| Byte |Var |
+|------|----|
+| 0x80 | 00	|
+| 0x13 | 11 |
+| 0x03 | 10	|
+| 0x0B | 12	|
+| 0x15 | 21	|
+| 0x05 | 20	|
+| 0x0D | 22	|
+
+O sinal (_Byte_)era enviado por bluetooth de acordo com um _switch case_ implementado usando os valores da tabela.
+
+Um LCD também foi conectado a placa e mostrava as direções de x e y, assim como o valor da variável de controle e as volatagens medidas para os eixos x e y.   
+
 
 ## Funcionamento do Programa do Triciclo
 
@@ -106,9 +129,9 @@ O funcionamento do programa pode ser resumido por meio do fluxograma a seguir:
   \node (goUp)     [Stm, left of=up, xshift=-2.4cm]				{Avançar};
   \node (down)     [Decision, below of=up, xshift=1.4cm, yshift=-0.5cm]          {Down?};
   \node (goDown)     [Stm, left of=down, xshift=-3.8cm]				{Voltar};
-       
+
   % Specification of lines between nodes specified above
-  % with aditional nodes for description 
+  % with aditional nodes for description
   \draw[->]             (start) -- (configLEDS);
   \draw[->]             (configLEDS) -- (configMotors);
   \draw[->]             (configMotors) -- (configSensor);
